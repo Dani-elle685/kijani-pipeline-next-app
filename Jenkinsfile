@@ -17,6 +17,22 @@ pipeline {
         disableConcurrentBuilds()
     }
 
+    stage('Debug') {
+        steps {
+            sh '''
+                pwd
+                git rev-parse HEAD
+                git status
+                echo "===== next.config.ts ====="
+                nl -ba next.config.ts
+                echo "===== package.json ====="
+                grep '"next"' package.json
+                node -v
+                npm -v
+            '''
+        }
+    }
+
     stages {
         stage('Build') {
             steps {
